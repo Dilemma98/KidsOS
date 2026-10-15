@@ -1,0 +1,125 @@
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 10px 0;
+  border-bottom: 2px dashed #efe3f5;
+  font-weight: 800;
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.setting-help {
+  margin: 6px 0 0;
+  color: #9b86a5;
+  font-size: 0.85rem;
+}
+
+.text-input,
+.parent-gate input {
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 2px solid #e6d7f0;
+  border-radius: 14px;
+  background: #fff;
+  color: #62436f;
+  font: inherit;
+  font-weight: 800;
+}
+
+.text-input {
+  width: min(220px, 100%);
+}
+
+.switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 64px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #e2d6ea;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.switch.is-on {
+  background: #a8e6cf;
+}
+
+.switch-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px #62436f30;
+  transition: transform 180ms ease;
+}
+
+.switch.is-on .switch-knob {
+  transform: translateX(28px);
+}
+
+.choice {
+  display: flex;
+  gap: 6px;
+}
+
+.choice button {
+  min-width: 52px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 2px solid #fff;
+  border-radius: 14px;
+  background: #f3ecfa;
+  color: #62436f;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.choice button.is-active {
+  outline: 3px solid #e6b45d;
+  background: #ffe1a0;
+}
+
+.parent-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.parent-gate input {
+  width: 140px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.gate-wrong {
+  margin: 0;
+  color: #c0556f;
+  font-size: 0.95rem;
+}
+
+.parent-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.reset-button {
+  background: #ffe1e8;
+}

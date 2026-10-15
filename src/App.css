@@ -1,0 +1,746 @@
+
+:root {
+  font-family: "Trebuchet MS", sans-serif;
+  color: #62436f;
+  background: #fff8f5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+html {
+  overflow-y: auto;
+}
+
+body {
+    min-height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+}
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+
+.kids-os {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px clamp(20px, 5vw, 60px);
+  display: flex;
+  flex-direction: column;
+
+  background:
+    radial-gradient(ellipse at 0% 0%, #ffe0ed 0%, transparent 38%),
+    radial-gradient(ellipse at 100% 40%, #ddf6e9 0%, transparent 35%),
+    radial-gradient(ellipse at 60% 100%, #f0e7ff 0%, transparent 35%),
+    #fff8f5;
+}
+
+.kids-os::before,
+.kids-os::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.kids-os::before {
+  width: 220px;
+  height: 220px;
+  top: 170px;
+  left: -130px;
+  background: #ffe5f0;
+}
+
+.kids-os::after {
+  width: 260px;
+  height: 260px;
+  right: -160px;
+  bottom: 30px;
+  background: #e4f4ff;
+}
+
+.decoration {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.decoration-star {
+  top: 24%;
+  right: 8%;
+  color: #f7c969;
+  font-size: 2.5rem;
+  transform: rotate(12deg);
+}
+
+.decoration-heart {
+  top: 49%;
+  left: 3%;
+  color: #f2a4ca;
+  font-size: 1.6rem;
+  transform: rotate(-15deg);
+}
+
+.decoration-sparkle {
+  right: 5%;
+  bottom: 15%;
+  color: #b9a3ec;
+  font-size: 2.4rem;
+}
+
+/* Toppfält */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 3px solid #ffffffc9;
+  border-radius: 21px;
+  background: linear-gradient(145deg, #ffb8d8, #d6b5ff);
+  box-shadow: 0 7px 15px #c59ce933;
+  font-size: 1.9rem;
+  transform: rotate(-5deg);
+}
+
+.brand-heart {
+  color: #f17eac;
+  font-size: 1.2rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Gullig väderikon */
+
+.weather-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 6px 16px;
+  border: 2px solid #ffffffd9;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #ffffffd9, #eee9ffdb);
+  box-shadow: 0 8px 20px #806b9110;
+}
+
+.weather-icon {
+  display: grid;
+  place-items: center;
+  font-size: 2.2rem;
+  animation: weather-float 3s ease-in-out infinite;
+}
+
+.weather-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weather-text strong {
+  font-size: 1.35rem;
+}
+
+.weather-text span {
+  color: #9580a2;
+  font-size: 0.85rem;
+}
+
+.weather-heart {
+  align-self: flex-start;
+  color: #ef94bc;
+  font-size: 1rem;
+}
+
+.parent-button {
+  min-width: 78px;
+  min-height: 56px;
+  padding: 5px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid #ffffff;
+  border-radius: 24px;
+  background: #ffffffc9;
+  color: #806b91;
+  box-shadow: 0 5px 15px #5946600d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.parent-icon {
+  font-size: 1.7rem;
+}
+
+.parent-button:hover {
+  transform: rotate(-3deg) scale(1.04);
+  box-shadow: 0 8px 20px #59466018;
+}
+
+/* Välkomstsektion */
+
+.welcome {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 0;
+  margin: 8px 0 16px;
+}
+
+.welcome-copy {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #ffffffb8;
+  color: #bd79a1;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.welcome h1 {
+  margin: 10px 0 6px;
+  color: #62436f;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.06em;
+}
+
+
+.welcome h1 span {
+  color: #d77eaa;
+}
+
+.welcome-copy > p {
+  margin: 6px auto 0;
+  color: #8b7892;
+  font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+  line-height: 1.45;
+}
+
+.welcome-copy > p span {
+  color: #ef83ad;
+}
+
+
+.welcome-bunny {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+
+  width: 110px;
+  height: 110px;
+
+  border: 3px solid #ffffffb8;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe2ed, #f5d9ff);
+  box-shadow: 0 12px 25px #d9a6d91c;
+
+  transform: rotate(-5deg);
+  animation: bunny-bob 4s ease-in-out infinite;
+}
+
+.welcome-bunny p {
+  margin: 0;
+  font-size: 4rem;
+  line-height: 1;
+}
+
+
+.bunny-heart {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  color: #f17eac;
+  font-size: 1.7rem;
+  transform: rotate(12deg);
+}
+
+.welcome-sun {
+  align-self: flex-start;
+  margin-top: 10px;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  animation: weather-float 4s ease-in-out infinite;
+}
+
+.rainbow {
+  position: absolute;
+  z-index: -1;
+  right: 2%;
+  bottom: -12px;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  opacity: 0.7;
+  transform: rotate(8deg);
+}
+
+/* Appkort */
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.app-card {
+  position: relative;
+  min-width: 0;
+  min-height: 190px;
+  padding: 22px;
+  overflow: hidden;
+  border: 3px solid #ffffffc9;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  color: #62436f;
+  box-shadow: 0 8px 0 #62436f08, 0 12px 25px #62436f0a;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  right: -42px;
+  bottom: -55px;
+  border-radius: 50%;
+  background: #ffffff55;
+}
+
+.app-card:hover {
+  transform: translateY(-4px) rotate(-0.5deg);
+  box-shadow: 0 10px 0 #62436f08, 0 18px 30px #62436f12;
+}
+
+.app-card:focus-visible,
+.parent-button:focus-visible,
+.back-button:focus-visible {
+  outline: 4px solid #a38bd6;
+  outline-offset: 4px;
+}
+
+.card-heart {
+  position: absolute;
+  top: 13px;
+  right: 18px;
+  color: #ffffffdb;
+  font-size: 1.4rem;
+}
+
+.app-icon {
+  flex: 0 0 auto;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #ffffffc9;
+  border-radius: 27px;
+  background: #ffffff88;
+  font-size: 2.8rem;
+  box-shadow: 0 5px 12px #62436f08;
+  transition: transform 180ms ease;
+}
+
+.app-card:hover .app-icon {
+  transform: rotate(-7deg) scale(1.06);
+}
+
+.app-copy {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.app-name {
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.app-description {
+  margin-top: 7px;
+  color: #786982;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.app-arrow {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #ffffffa8;
+  border-radius: 50%;
+  background: #ffffff70;
+  font-size: 2rem;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.app-card:hover .app-arrow {
+  transform: translateX(3px);
+}
+
+.pink {
+  background: linear-gradient(145deg, #fbe2ee, #f7cfe5);
+}
+
+.green {
+  background: linear-gradient(145deg, #e1f5e8, #cceedd);
+}
+
+.yellow {
+  background: linear-gradient(145deg, #fff1cf, #ffe4a4);
+}
+
+.purple {
+  background: linear-gradient(145deg, #eee8ff, #dfd2ff);
+}
+
+/* Gullig sidfot */
+
+.bottom-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 34px;
+  color: #9b7ea5;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.footer-line {
+  width: 30px;
+  height: 3px;
+  border-radius: 10px;
+  background: #e6b3d1;
+}
+
+.footer-heart {
+  color: #ed8bb7;
+  font-size: 1.3rem;
+}
+
+/* Föräldraläge */
+
+.parent-view {
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+  padding: 35px 0;
+  text-align: center;
+}
+
+.parent-bunny {
+  margin-bottom: 14px;
+  font-size: 5rem;
+}
+
+.parent-view h1 {
+  margin: 20px 0 10px;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.parent-view > p {
+  color: #8b7892;
+  line-height: 1.7;
+}
+
+.parent-panel {
+  margin: 28px 0;
+  padding: 24px;
+  border: 2px solid #ffffff;
+  border-radius: 28px;
+  background: #ffffffbd;
+  box-shadow: 0 12px 30px #5946600c;
+  text-align: left;
+  line-height: 1.7;
+}
+
+.parent-panel h2 {
+  margin-top: 0;
+}
+
+.parent-warning {
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff1cf;
+  color: #785d35;
+  font-size: 0.88rem;
+}
+
+.back-button {
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 2px solid #ffffff;
+  border-radius: 16px;
+  background: #e9e2ff;
+  color: #62436f;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Små animationer */
+
+@keyframes bunny-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+}
+
+@keyframes weather-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Surfplattor och mindre skärmar */
+
+@media (min-width: 700px) {
+  .app-grid {
+    gap: 24px;
+  }
+
+  .app-card {
+    min-height: 205px;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 650px) {
+  .kids-os {
+    padding: 20px 18px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
+  .brand-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 16px;
+    font-size: 1.5rem;
+  }
+
+  .brand-heart {
+    display: none;
+  }
+
+  .topbar-actions {
+    gap: 7px;
+  }
+
+  .weather-pill {
+    min-height: 52px;
+    gap: 5px;
+    padding: 6px 9px;
+    border-radius: 20px;
+  }
+
+  .weather-icon {
+    font-size: 1.6rem;
+  }
+
+  .weather-text strong {
+    font-size: 1rem;
+  }
+
+  .weather-text span {
+    font-size: 0.7rem;
+  }
+
+  .weather-heart {
+    display: none;
+  }
+
+  .parent-button {
+    min-width: 54px;
+    min-height: 52px;
+    padding: 5px;
+    border-radius: 17px;
+    font-size: 0.62rem;
+  }
+
+  .parent-icon {
+    font-size: 1.3rem;
+  }
+
+  .welcome {
+    min-height: auto;
+    margin: 35px 0 25px;
+    gap: 10px;
+  }
+
+ .welcome-bunny {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  font-size: 3.7rem;
+}
+
+  .welcome-sun {
+    font-size: 2rem;
+  }
+
+  .welcome h1 {
+    margin: 13px 0 8px;
+    font-size: clamp(1.8rem, 6vw, 2.7rem);
+  }
+
+  .welcome-copy > p {
+    font-size: 0.9rem;
+  }
+
+  .eyebrow {
+    padding: 7px 10px;
+    font-size: 0.65rem;
+  }
+
+  .app-grid {
+    gap: 12px;
+  }
+
+  .app-card {
+    min-height: 155px;
+    padding: 15px 12px;
+    border-radius: 24px;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .app-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    font-size: 2rem;
+  }
+
+  .app-copy {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .app-name {
+    font-size: 1.1rem;
+  }
+
+  .app-description {
+    font-size: 0.8rem;
+  }
+
+  .app-arrow {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 28px;
+    height: 28px;
+    font-size: 1.5rem;
+  }
+
+  .bottom-note {
+    padding-top: 28px;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .footer-line {
+    width: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
