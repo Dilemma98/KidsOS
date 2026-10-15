@@ -4,6 +4,7 @@ import DrawingApp from "./screens/DrawingApp";
 import Memory from "./screens/Memory";
 import Bubbles from "./screens/Bubbles";
 import Animals from "./screens/Animals";
+import Stickers from "./screens/Stickers";
 import { useWeather } from "./useWeather";
 import ParentView from "./screens/ParentView";
 import { useSettings } from "./useSettings";
@@ -36,27 +37,33 @@ const apps: AppItem[] = [
     color: "yellow",
   },
   {
-  name: "Djur",
-  description: "Lär dig roliga saker om djur!",
-  icon: "🐾",
-  color: "purple",
-},
+    name: "Djur",
+    description: "Lär dig roliga saker om djur!",
+    icon: "🐾",
+    color: "purple",
+  },
+  {
+    name: "Klistermärken",
+    description: "Skapa egna gulliga bilder!",
+    icon: "🌈",
+    color: "green",
+  },
   {
     name: "Favoriter",
     description: "Dina bästa appar samlade här!",
     icon: "⭐",
-    color: "green",
+    color: "pink",
   },
 ];
 
 export default function App() {
   const [parentMode, setParentMode] = useState(false);
-const [screen, setScreen] = useState<
-  "home" | "drawing" | "memory" | "bubbles" | "animals"
->("home");
+  const [screen, setScreen] = useState<
+    "home" | "drawing" | "memory" | "bubbles" | "animals" | "stickers"
+  >("home");
   const [settings, update] = useSettings();
-const weather = useWeather(settings.useLocation);
-const visibleApps = apps.filter((a) => !settings.hiddenApps.includes(a.name));
+  const weather = useWeather(settings.useLocation);
+  const visibleApps = apps.filter((a) => !settings.hiddenApps.includes(a.name));
 
   function openApp(name: string) {
     if (name === "Rita") {
@@ -72,9 +79,13 @@ const visibleApps = apps.filter((a) => !settings.hiddenApps.includes(a.name));
       return;
     }
     if (name === "Djur") {
-  setScreen("animals");
-  return;
-}
+      setScreen("animals");
+      return;
+    }
+    if (name === "Klistermärken") {
+      setScreen("stickers");
+      return;
+    }
 
     alert(`${name} kommer snart! 💗`);
   }
@@ -82,26 +93,29 @@ const visibleApps = apps.filter((a) => !settings.hiddenApps.includes(a.name));
     return <DrawingApp onBack={() => setScreen("home")} />;
   }
   if (screen === "memory") {
-  return (
-    <Memory
-      onBack={() => setScreen("home")}
-      startPairs={settings.memoryPairs}
-      sound={settings.sound}
-    />
-  );
-}
+    return (
+      <Memory
+        onBack={() => setScreen("home")}
+        startPairs={settings.memoryPairs}
+        sound={settings.sound}
+      />
+    );
+  }
 
-if (screen === "bubbles") {
-  return (
-    <Bubbles
-      onBack={() => setScreen("home")}
-      sound={settings.sound}
-      speed={settings.bubbleSpeed}
-    />
-  );
-}
-if (screen === "animals") {
-  return <Animals onBack={() => setScreen("home")} sound={settings.sound} />;
+  if (screen === "bubbles") {
+    return (
+      <Bubbles
+        onBack={() => setScreen("home")}
+        sound={settings.sound}
+        speed={settings.bubbleSpeed}
+      />
+    );
+  }
+  if (screen === "animals") {
+    return <Animals onBack={() => setScreen("home")} sound={settings.sound} />;
+  }
+  if (screen === "stickers") {
+  return <Stickers onBack={() => setScreen("home")} />;
 }
 
   return (
@@ -147,14 +161,14 @@ if (screen === "animals") {
         </div>
       </header>
 
-{parentMode ? (
-  <ParentView
-    settings={settings}
-    update={update}
-    apps={apps}
-    onClose={() => setParentMode(false)}
-  />
-) : (
+      {parentMode ? (
+        <ParentView
+          settings={settings}
+          update={update}
+          apps={apps}
+          onClose={() => setParentMode(false)}
+        />
+      ) : (
         <>
           <section className="welcome">
             <div className="welcome-bunny">

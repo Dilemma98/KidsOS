@@ -1,0 +1,393 @@
+
+.stickers-app {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  color: #59434b;
+  background: #fff7f5;
+  font-family: inherit;
+}
+
+.stickers-app * {
+  box-sizing: border-box;
+}
+
+.stickers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sticker-book-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.book-heading-icon {
+  font-size: 36px;
+}
+
+.sticker-book-heading h1 {
+  margin: 0;
+  font-size: clamp(18px, 3vw, 25px);
+  color: #9b5878;
+}
+
+.sticker-book-heading p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #a17d8d;
+}
+
+.sticker-back-button,
+.sticker-delete-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 13px;
+  background: #f5e4ed;
+  color: #80516a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sticker-delete-button {
+  background: #f9dfe5;
+  color: #a24e66;
+}
+
+.sticker-delete-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.book-section {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.book-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 12px;
+}
+
+.book-navigation span {
+  min-width: 130px;
+  color: #94687c;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.book-navigation button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2dce7;
+  color: #985d7a;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.book-navigation button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.sticker-book {
+  position: relative;
+  padding: 12px;
+  border: 1px solid #d6b79b;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    #d8b795,
+    #f3dfc7 30%,
+    #cba681 100%
+  );
+  box-shadow:
+    0 7px 0 #c8a17c,
+    0 12px 22px rgba(110, 75, 67, 0.17);
+}
+
+.book-pages {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.sticker-book-page {
+  position: relative;
+  min-width: 0;
+  height: clamp(230px, 36vh, 390px);
+  overflow: hidden;
+  border: 1px solid #eee0cd;
+  background:
+    radial-gradient(
+      circle at 15% 14%,
+      rgba(237, 210, 188, 0.15) 0 2px,
+      transparent 3px
+    ),
+    linear-gradient(135deg, #fffdf6, #fff9ed 75%, #f8efdf);
+  box-shadow: inset 0 0 15px rgba(156, 116, 85, 0.05);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sticker-book-page:first-child {
+  border-radius: 10px 3px 3px 10px;
+  box-shadow:
+    inset -8px 0 12px -12px rgba(93, 62, 47, 0.6),
+    inset 0 0 12px rgba(156, 116, 85, 0.06);
+}
+
+.sticker-book-page:last-child {
+  border-radius: 3px 10px 10px 3px;
+  box-shadow:
+    inset 8px 0 12px -12px rgba(93, 62, 47, 0.6),
+    inset 0 0 12px rgba(156, 116, 85, 0.06);
+}
+
+.sticker-book-page.active-page {
+  background-color: #fffdf6;
+}
+
+.book-spine {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  width: 9px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(147, 103, 75, 0.05),
+    rgba(126, 83, 60, 0.2),
+    rgba(255, 255, 255, 0.65),
+    rgba(126, 83, 60, 0.12)
+  );
+}
+
+.book-page-number {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #c3a895;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.empty-book-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #d5b8c3;
+  text-align: center;
+  pointer-events: none;
+}
+
+.empty-book-page span {
+  font-size: 28px;
+  opacity: 0.65;
+}
+
+.empty-book-page p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.book-sticker {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(42px, 7vw, 66px);
+  height: clamp(42px, 7vw, 66px);
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 3px solid #fff;
+  border-radius: 45% 48% 43% 50%;
+  background: transparent;
+  box-shadow:
+    0 3px 5px rgba(87, 62, 69, 0.2),
+    0 1px 1px rgba(87, 62, 69, 0.1);
+  font-size: clamp(27px, 5vw, 43px);
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.book-sticker:active {
+  cursor: grabbing;
+}
+
+.book-sticker.selected {
+  border-color: #f2a7c8;
+  background: rgba(255, 226, 240, 0.35);
+  box-shadow:
+    0 0 0 3px rgba(242, 167, 200, 0.25),
+    0 4px 8px rgba(87, 62, 69, 0.18);
+}
+
+.active-page-hint {
+  margin: 15px 0 10px;
+  color: #a17d8d;
+  font-size: 13px;
+  text-align: center;
+}
+
+.book-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.book-actions button {
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 14px;
+  background: #f4e1eb;
+  color: #89566e;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.book-actions button:last-child {
+  background: #f8e7df;
+  color: #996b60;
+}
+
+.sticker-tray {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+  border: 1px solid #f0dce4;
+  border-radius: 20px;
+  background: #fffdfb;
+  box-shadow: 0 4px 12px rgba(116, 74, 92, 0.06);
+}
+
+.sticker-tray h2 {
+  margin: 0 0 12px;
+  color: #9b5878;
+  font-size: 17px;
+  text-align: center;
+}
+
+.sticker-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+  gap: 8px;
+}
+
+.sticker-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid #f1e0e8;
+  border-radius: 14px;
+  background: #fff8fb;
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.sticker-option:active {
+  transform: scale(0.92);
+}
+
+.sticker-save-note {
+  margin: 13px 0 0;
+  color: #b18599;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .stickers-app {
+    padding: 10px;
+  }
+
+  .stickers-header {
+    gap: 6px;
+  }
+
+  .sticker-book-heading {
+    gap: 5px;
+  }
+
+  .book-heading-icon {
+    font-size: 27px;
+  }
+
+  .sticker-book-heading h1 {
+    font-size: 16px;
+  }
+
+  .sticker-book-heading p {
+    font-size: 11px;
+  }
+
+  .sticker-back-button,
+  .sticker-delete-button {
+    padding: 9px 8px;
+    font-size: 12px;
+  }
+
+  .sticker-book {
+    padding: 7px;
+    border-radius: 15px;
+  }
+
+  .book-spine {
+    top: 7px;
+    bottom: 7px;
+    width: 6px;
+  }
+
+  .sticker-book-page {
+    height: clamp(220px, 35vh, 330px);
+  }
+
+  .sticker-tray {
+    padding: 12px;
+  }
+
+  .sticker-options {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .sticker-option {
+    min-height: 43px;
+    font-size: 27px;
+  }
+}
