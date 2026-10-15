@@ -6,8 +6,10 @@ import Bubbles from "./screens/Bubbles";
 import Animals from "./screens/Animals";
 import Stickers from "./screens/Stickers";
 import MyDay from "./screens/MyDay";
-import { useWeather } from "./useWeather";
 import ParentView from "./screens/ParentView";
+import MusicStudio from "./screens/MusicStudio";
+
+import { useWeather } from "./useWeather";
 import { useSettings } from "./useSettings";
 
 type AppItem = {
@@ -47,7 +49,7 @@ const apps: AppItem[] = [
     name: "Klistermärken",
     description: "Skapa egna gulliga bilder!",
     icon: "🌈",
-    color: "green",
+    color: "purple",
   },
   {
     name: "Min dag",
@@ -55,6 +57,12 @@ const apps: AppItem[] = [
     icon: "🌞",
     color: "yellow",
   },
+  {
+  name: "Musikstudio",
+  description: "Spela och skapa egen musik!",
+  icon: "🎹",
+  color: "pink",
+},
   {
     name: "Favoriter",
     description: "Dina bästa appar samlade här!",
@@ -75,6 +83,7 @@ const [screen, setScreen] = useState<
   | "stickers"
   | "myday"
   | "myday-settings"
+  | "music"
 >("home");
 
   const [settings, update] = useSettings();
@@ -127,6 +136,10 @@ const [screen, setScreen] = useState<
       setScreen("myday");
       return;
     }
+    if (name === "Musikstudio") {
+  setScreen("music");
+  return;
+}
     alert(`${name} kommer snart! 💗`);
   }
   if (screen === "drawing") {
@@ -180,8 +193,13 @@ if (screen === "myday-settings") {
     />
   );
 }
-
-
+if (screen === "music") {
+  return (
+    <MusicStudio
+      onBack={() => setScreen("home")}
+    />
+  );
+}
 
   return (
     <main className="kids-os">

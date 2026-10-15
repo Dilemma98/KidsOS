@@ -1,0 +1,308 @@
+
+.music-studio {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 24px;
+  color: #713c5c;
+  background:
+    radial-gradient(circle at 10% 10%, #ffe1ef 0, transparent 35%),
+    radial-gradient(circle at 90% 80%, #e5e2ff 0, transparent 35%),
+    #fff7fb;
+  font-family: inherit;
+}
+
+.music-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.music-back {
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 18px;
+  background: white;
+  color: #8b4c71;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px #c77ba51a;
+}
+
+.music-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.music-title-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 22px;
+  background: #ffd8e9;
+  font-size: 34px;
+}
+
+.music-title h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 36px);
+}
+
+.music-title p,
+.piano-heading p {
+  margin: 6px 0 0;
+  color: #a07892;
+}
+
+.music-note-display {
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: white;
+  font-weight: 700;
+  box-shadow: 0 4px 14px #c77ba51a;
+}
+
+.instrument-section,
+.piano-section {
+  margin: 0 auto 24px;
+  max-width: 1000px;
+  padding: 24px;
+  border: 2px solid #f6e1ed;
+  border-radius: 28px;
+  background: #ffffffd9;
+  box-shadow: 0 10px 30px #b36c9610;
+}
+
+.instrument-section h2,
+.piano-heading h2 {
+  margin: 0;
+  font-size: 23px;
+}
+
+.instrument-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.instrument-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 145px;
+  padding: 16px 8px;
+  border: 3px solid transparent;
+  border-radius: 22px;
+  background: #fff0f6;
+  color: #713c5c;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.instrument-card:nth-child(2) {
+  background: #f0edff;
+}
+
+.instrument-card:nth-child(3) {
+  background: #fff4d9;
+}
+
+.instrument-card.selected {
+  border-color: #df82b0;
+  transform: translateY(-3px);
+}
+
+.instrument-emoji {
+  font-size: 36px;
+}
+
+.instrument-card strong {
+  font-size: 17px;
+}
+
+.instrument-card > span:last-child {
+  font-size: 12px;
+  text-align: center;
+}
+
+.piano-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.piano-sparkle {
+  font-size: 32px;
+}
+
+.piano-keys {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 26px;
+}
+
+.piano-key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 0;
+  min-height: 190px;
+  padding: 14px 2px;
+  border: 2px solid #ffffff;
+  border-radius: 14px;
+  color: #713c5c;
+  box-shadow: 0 5px 0 #d9bfd0;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.piano-key:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #d9bfd0;
+}
+
+.piano-key.pink {
+  background: #ffcfe3;
+}
+
+.piano-key.peach {
+  background: #ffdfd1;
+}
+
+.piano-key.yellow {
+  background: #fff0ac;
+}
+
+.piano-key.green {
+  background: #d5f2d7;
+}
+
+.piano-key.blue {
+  background: #d2eaff;
+}
+
+.piano-key.purple {
+  background: #e4d9ff;
+}
+
+.key-note {
+  font-size: clamp(16px, 2.5vw, 23px);
+  font-weight: 800;
+}
+
+.key-label {
+  font-size: 12px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+  font-weight: 700;
+}
+
+.volume-control input {
+  flex: 1;
+  min-width: 0;
+  accent-color: #dc82b0;
+}
+
+.music-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: #a07892;
+  font-weight: 700;
+  text-align: center;
+}
+
+.music-footer p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .music-studio {
+    padding: 14px;
+  }
+
+  .music-header {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .music-title {
+    flex: 1;
+    gap: 10px;
+  }
+
+  .music-title-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 26px;
+    border-radius: 16px;
+  }
+
+  .music-note-display {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .instrument-section,
+  .piano-section {
+    padding: 16px 10px;
+    border-radius: 22px;
+  }
+
+  .instrument-list {
+    gap: 8px;
+  }
+
+  .instrument-card {
+    min-height: 120px;
+    padding: 12px 4px;
+  }
+
+  .instrument-emoji {
+    font-size: 29px;
+  }
+
+  .instrument-card strong {
+    font-size: 14px;
+  }
+
+  .instrument-card > span:last-child {
+    font-size: 10px;
+  }
+
+  .piano-keys {
+    gap: 4px;
+  }
+
+  .piano-key {
+    min-height: 155px;
+    border-radius: 9px;
+  }
+
+  .key-label {
+    font-size: 10px;
+  }
+}
