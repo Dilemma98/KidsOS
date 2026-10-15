@@ -1,0 +1,551 @@
+
+.my-day {
+  min-height: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  color: #604652;
+  background: #fff7fa;
+  font-family: inherit;
+}
+
+.my-day *,
+.my-day *::before,
+.my-day *::after {
+  box-sizing: border-box;
+}
+
+.my-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.my-day-back {
+  padding: 12px 15px;
+  border: 0;
+  border-radius: 15px;
+  background: #f3e1ed;
+  color: #87516e;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.my-day-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.my-day-title > span {
+  font-size: 36px;
+}
+
+.my-day-title h1 {
+  margin: 0;
+  color: #a4567d;
+  font-size: clamp(22px, 4vw, 30px);
+}
+
+.my-day-title p {
+  margin: 4px 0 0;
+  color: #a17f90;
+  font-size: 13px;
+}
+
+.my-day-date {
+  padding: 9px 12px;
+  border-radius: 13px;
+  background: #fff;
+  color: #a4567d;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.my-day-progress {
+  max-width: 850px;
+  margin: 0 auto 24px;
+  padding: 20px;
+  border: 1px solid #f1dce7;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(145, 84, 116, 0.06);
+}
+
+.progress-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress-message h2 {
+  margin: 0;
+  color: #a4567d;
+  font-size: 21px;
+}
+
+.progress-message p {
+  margin: 6px 0 0;
+  color: #997b8a;
+  font-size: 14px;
+}
+
+.progress-stars {
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #fff2cc;
+  color: #91682b;
+  font-size: 19px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.progress-track {
+  height: 15px;
+  margin-top: 17px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f6e8ef;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f5a7c7, #d58adf);
+  transition: width 0.3s ease;
+}
+
+.progress-hint,
+.all-done {
+  margin: 12px 0 0;
+  color: #ad8296;
+  font-size: 13px;
+  text-align: center;
+}
+
+.all-done {
+  color: #a4567d;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.my-day-periods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.day-period {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #f0dfe7;
+  border-radius: 22px;
+  background: #fff;
+}
+
+.day-period.morning {
+  background: linear-gradient(180deg, #fff9e9, #fff);
+  border-color: #f4e4bb;
+}
+
+.day-period.day {
+  background: linear-gradient(180deg, #f5f4ff, #fff);
+  border-color: #e4def7;
+}
+
+.day-period.evening {
+  background: linear-gradient(180deg, #f3f0ff, #fff);
+  border-color: #e1daf4;
+}
+
+.period-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.period-emoji {
+  font-size: 29px;
+}
+
+.period-header h2 {
+  margin: 0;
+  color: #915b78;
+  font-size: 17px;
+}
+
+.period-header p {
+  margin: 4px 0 0;
+  color: #a18a97;
+  font-size: 12px;
+}
+
+.period-count {
+  margin-left: auto;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #986681;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.day-activities {
+  display: grid;
+  gap: 10px;
+}
+
+.day-activity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 76px;
+  padding: 11px;
+  border: 2px solid #f1e5ec;
+  border-radius: 17px;
+  background: #fff;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.day-activity:active {
+  transform: scale(0.98);
+}
+
+.day-activity.completed {
+  border-color: #c6e7cb;
+  background: #f0fbf0;
+}
+
+.activity-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #fff1f6;
+  font-size: 26px;
+}
+
+.completed .activity-emoji {
+  background: #ddf3df;
+}
+
+.activity-copy {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 4px;
+}
+
+.activity-title {
+  color: #795365;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.activity-description {
+  color: #a38b98;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.completed .activity-title {
+  color: #56855c;
+}
+
+.activity-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 27px;
+  width: 27px;
+  height: 27px;
+  border: 2px solid #e8d6e0;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.completed .activity-check {
+  border-color: #78bd81;
+  background: #78bd81;
+}
+
+.my-day-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+  color: #b08098;
+  font-size: 14px;
+  text-align: center;
+}
+
+.my-day-footer p {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .my-day {
+    padding: 12px;
+  }
+
+  .my-day-periods {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .day-period {
+    padding: 13px;
+  }
+
+  .day-activities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .day-activity {
+    min-height: 76px;
+    padding: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-day-header {
+    flex-wrap: wrap;
+  }
+
+  .my-day-title {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .my-day-back {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .my-day-date {
+    font-size: 12px;
+  }
+
+  .day-activities {
+    grid-template-columns: 1fr;
+  }
+
+  .my-day-progress {
+    padding: 15px;
+  }
+}
+/* Knappen för att ändra rutiner */
+.routine-settings-button {
+  padding: 12px 15px;
+  border: 0;
+  border-radius: 15px;
+  background: #f3e1ed;
+  color: #87516e;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Redigeringspanelen */
+.routine-editor {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 22px;
+  border: 1px solid #f1dce7;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(145, 84, 116, 0.06);
+}
+
+.routine-editor h2 {
+  margin: 0;
+  color: #a4567d;
+  font-size: 23px;
+}
+
+.routine-editor-intro {
+  margin: 8px 0 20px;
+  color: #997b8a;
+  font-size: 14px;
+}
+
+.routine-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.routine-form label {
+  display: grid;
+  gap: 7px;
+  color: #795365;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.routine-form input,
+.routine-form select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #ead5e1;
+  border-radius: 13px;
+  background: #fff9fc;
+  color: #604652;
+  font: inherit;
+}
+
+.routine-form input:focus,
+.routine-form select:focus {
+  outline: 3px solid #f4d7e7;
+  border-color: #c77ba1;
+}
+
+.routine-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  grid-column: 1 / -1;
+}
+
+.routine-save-button,
+.routine-cancel-button {
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.routine-save-button {
+  background: #d9f0dc;
+  color: #43784c;
+}
+
+.routine-cancel-button {
+  background: #f5e8ef;
+  color: #87516e;
+}
+
+.routine-list-heading {
+  margin: 26px 0 12px;
+  color: #a4567d;
+  font-size: 18px;
+}
+
+.routine-management-list {
+  display: grid;
+  gap: 10px;
+}
+
+.routine-management-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #f1e5ec;
+  border-radius: 15px;
+  background: #fff9fc;
+}
+
+.routine-management-emoji {
+  font-size: 27px;
+}
+
+.routine-management-copy {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 4px;
+}
+
+.routine-management-copy strong {
+  overflow-wrap: anywhere;
+  color: #795365;
+  font-size: 14px;
+}
+
+.routine-management-copy span {
+  color: #a38b98;
+  font-size: 12px;
+}
+
+.routine-edit-button,
+.routine-delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: #f3e1ed;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.routine-delete-button {
+  background: #fce7e8;
+}
+
+.empty-routines {
+  margin: 8px 0;
+  color: #a38b98;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .my-day-header {
+    flex-wrap: wrap;
+  }
+
+  .routine-settings-button {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .routine-editor {
+    padding: 15px;
+  }
+
+  .routine-form {
+    grid-template-columns: 1fr;
+  }
+
+  .routine-form-actions {
+    grid-column: auto;
+  }
+
+  .routine-save-button,
+  .routine-cancel-button {
+    flex: 1;
+  }
+}

@@ -9,6 +9,7 @@ type Props = {
   update: (patch: Partial<Settings>) => void;
   apps: { name: string; icon: string }[];
   onClose: () => void;
+  onEditRoutines: () => void;
 };
 
 function Switch({
@@ -59,7 +60,7 @@ function Choice<T extends string | number>({
   );
 }
 
-export default function ParentView({ settings, update, apps, onClose }: Props) {
+export default function ParentView({ settings, update, apps, onClose, onEditRoutines }: Props) {
   const [unlocked, setUnlocked] = useState(false);
   const [answer, setAnswer] = useState("");
   const [wrong, setWrong] = useState(false);
@@ -189,6 +190,20 @@ export default function ParentView({ settings, update, apps, onClose }: Props) {
           />
         </div>
       </div>
+      <div className="parent-panel">
+  <h2>🌞 Min dag</h2>
+  <p className="setting-help">
+    Anpassa vilka rutiner som visas i {settings.childName} dagslista.
+  </p>
+
+  <button
+    type="button"
+    className="back-button"
+    onClick={onEditRoutines}
+  >
+    ✏️ Hantera rutiner
+  </button>
+</div>
 
       <div className="parent-panel">
         <h2>🌤️ Väder</h2>
