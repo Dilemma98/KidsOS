@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 import DrawingApp from "./screens/DrawingApp";
 import Memory from "./screens/Memory";
@@ -64,6 +64,30 @@ export default function App() {
   const [settings, update] = useSettings();
   const weather = useWeather(settings.useLocation);
   const visibleApps = apps.filter((a) => !settings.hiddenApps.includes(a.name));
+  const [homePage, setHomePage] = useState(0);
+const appPagesRef = useRef<HTMLDivElement>(null);
+const appsPerPage = 4;
+
+const appPages = Array.from(
+  { length: Math.ceil(visibleApps.length / appsPerPage) },
+  (_, index) =>
+    visibleApps.slice(
+      index * appsPerPage,
+      (index + 1) * appsPerPage
+    )
+);
+
+function goToPage(index: number) {
+  const container = appPagesRef.current;
+  if (!container) return;
+
+  container.scrollTo({
+    left: index * container.clientWidth,
+    behavior: "smooth",
+  });
+
+  setHomePage(index);
+}
 
   function openApp(name: string) {
     if (name === "Rita") {
@@ -196,31 +220,68 @@ export default function App() {
             </div>
           </section>
 
-          <section className="app-grid" aria-label="Mina appar">
-            {visibleApps.map((app) => (
-              <button
-                key={app.name}
-                className={`app-card ${app.color}`}
-                onClick={() => openApp(app.name)}
-              >
-                {/* <span className="card-heart" aria-hidden="true">
-                  ♥
-                </span> */}
-                <span className="app-icon" aria-hidden="true">
-                  {app.icon}
-                </span>
+<div className="app-pages-viewport">
+  <div
+    className="app-pages"
+    ref={appPagesRef}
+    onScroll={(event) => {
+      const container = event.currentTarget;
+      const page = Math.round(
+        container.scrollLeft / container.clientWidth
+      );
+      setHomePage(page);
+    }}
+  >
+    {appPages.map((pageApps, pageIndex) => (
+      <section
+        className="app-grid app-page"
+        key={pageIndex}
+        aria-label={`Appar, sida ${pageIndex + 1}`}
+      >
+        {pageApps.map((app) => (
+          <button
+            key={app.name}
+            className={`app-card ${app.color}`}
+            onClick={() => openApp(app.name)}
+          >
+            <span className="app-icon" aria-hidden="true">
+              {app.icon}
+            </span>
 
-                <span className="app-copy">
-                  <span className="app-name">{app.name}</span>
-                  <span className="app-description">{app.description}</span>
-                </span>
+            <span className="app-copy">
+              <span className="app-name">{app.name}</span>
+              <span className="app-description">
+                {app.description}
+              </span>
+            </span>
 
-                <span className="app-arrow" aria-hidden="true">
-                  ›
-                </span>
-              </button>
-            ))}
-          </section>
+            <span className="app-arrow" aria-hidden="true">
+              ›
+            </span>
+          </button>
+        ))}
+      </section>
+    ))}
+  </div>
+</div>
+
+{appPages.length > 1 && (
+  <nav className="home-page-dots" aria-label="Välj hemskärmssida">
+    {appPages.map((_, index) => (
+      <button
+        key={index}
+        type="button"
+        className={`home-page-dot ${
+          homePage === index ? "active" : ""
+        }`}
+        onClick={() => goToPage(index)}
+        aria-label={`Gå till sida ${index + 1}`}
+        aria-current={homePage === index ? "page" : undefined}
+      />
+    ))}
+  </nav>
+)}
+
 
           <footer className="bottom-note">
             <span className="footer-line" />
