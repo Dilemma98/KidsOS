@@ -522,6 +522,43 @@
   text-align: center;
 }
 
+.day-activity-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+}
+
+.day-activity-wrapper .day-activity {
+  flex: 1;
+  min-width: 0;
+}
+
+.routine-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #a17aa5;
+  font-size: 1.7rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.routine-drag-handle:active {
+  cursor: grabbing;
+}
+
+.day-activity-wrapper.dragging {
+  z-index: 2;
+}
+
 @media (max-width: 600px) {
   .my-day-header {
     flex-wrap: wrap;

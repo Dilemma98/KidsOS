@@ -1,0 +1,320 @@
+
+.writing-book {
+  --writing-pink: #f8dce8;
+  --writing-purple: #62436f;
+  --writing-cream: #fff8f5;
+  --writing-green: #dff2e5;
+
+  min-height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--writing-purple);
+  font-family: "Trebuchet MS", sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, #fce9f0 0, transparent 28%),
+    radial-gradient(circle at 90% 85%, #e5f4e9 0, transparent 28%),
+    var(--writing-cream);
+  border-radius: 24px;
+}
+
+.writing-header,
+.writing-heading,
+.writing-paper-top,
+.writing-paper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.writing-header {
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.writing-heading {
+  justify-content: flex-start;
+}
+
+.writing-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 14px #62436f12;
+  font-size: 30px;
+}
+
+.writing-heading h1 {
+  margin: 0;
+  font-size: clamp(23px, 4vw, 32px);
+}
+
+.writing-heading p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.writing-button {
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 16px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.15s ease;
+}
+
+.writing-button:active,
+.writing-page-tab:active {
+  transform: scale(0.97);
+}
+
+.writing-new-button {
+  background: #dff2e5;
+  color: #355b48;
+  box-shadow: 0 4px 10px #355b4812;
+}
+
+.writing-layout {
+  display: grid;
+  grid-template-columns: minmax(145px, 210px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.writing-sidebar {
+  padding: 14px;
+  background: #f5e8fa;
+  border-radius: 22px;
+  align-self: start;
+}
+
+.writing-sidebar h2 {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+.writing-empty-list {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.writing-page-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.writing-page-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 9px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background: #ffffffb8;
+  color: var(--writing-purple);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.writing-page-tab.active {
+  border-color: #c69bd5;
+  background: white;
+}
+
+.writing-page-number {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--writing-pink);
+  font-weight: bold;
+}
+
+.writing-page-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.writing-paper {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 390px;
+  padding: 18px;
+  background: white;
+  border: 2px solid #f4e1ec;
+  border-radius: 22px;
+  box-shadow: 0 8px 24px #62436f0d;
+}
+
+.writing-paper-top {
+  margin-bottom: 14px;
+  font-size: 22px;
+}
+
+.writing-save-status {
+  font-size: 12px;
+  color: #478263;
+}
+
+.writing-title-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 4px;
+  margin-bottom: 12px;
+  border: 0;
+  border-bottom: 2px dashed #efcddd;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--writing-purple);
+  font-family: inherit;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.writing-title-input:focus {
+  border-bottom-color: #b783c9;
+}
+
+.writing-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 220px;
+  box-sizing: border-box;
+  padding: 14px 10px;
+  border: 0;
+  border-radius: 12px;
+  outline: none;
+  resize: vertical;
+  background: repeating-linear-gradient(
+    to bottom,
+    white 0,
+    white 35px,
+    #f2e5ed 36px,
+    white 37px
+  );
+  color: #493653;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 19px;
+  line-height: 36px;
+  overflow-wrap: anywhere;
+}
+
+.writing-textarea:focus {
+  box-shadow: inset 0 0 0 2px #f8dce8;
+}
+
+.writing-paper-footer {
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12px;
+}
+
+.writing-delete-button {
+  background: #fff0f0;
+  color: #a34d63;
+}
+
+.writing-welcome {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 8px;
+}
+
+.writing-welcome-icon {
+  font-size: 58px;
+}
+
+.writing-welcome h2 {
+  margin-bottom: 4px;
+}
+
+.writing-welcome p {
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+.writing-back-button{
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 13px;
+  background: #f5e4ed;
+  color: #80516a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.writing-bottom-note {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 13px;
+}
+
+.writing-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .writing-book {
+    padding: 12px;
+  }
+
+  .writing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-sidebar {
+    padding: 12px;
+  }
+
+  .writing-page-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .writing-page-tab {
+    flex: 0 0 145px;
+  }
+
+  .writing-paper {
+    min-height: 360px;
+    padding: 13px;
+  }
+
+  .writing-textarea {
+    font-size: 18px;
+  }
+}

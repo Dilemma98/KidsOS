@@ -1,4 +1,22 @@
+
 import { useEffect, useState, type FormEvent } from "react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import type { ReactNode } from "react";
+
 import "./MyDay.css";
 
 interface MyDayProps {
@@ -128,6 +146,7 @@ function getToday(): string {
 function loadRoutines(): Activity[] {
   try {
     const saved = localStorage.getItem(ROUTINES_KEY);
+
     if (saved) {
       const parsed = JSON.parse(saved) as Activity[];
       if (Array.isArray(parsed)) return parsed;
@@ -154,6 +173,105 @@ function loadProgress(): SavedProgress {
   return { date: getToday(), completed: [] };
 }
 
+function SortableRoutineItem({
+  activity,
+  children,
+}: {
+  activity: Activity;
+  children: ReactNode;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: activity.id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className="routine-management-item"
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+        position: "relative",
+        zIndex: isDragging ? 1 : undefined,
+      }}
+      {...attributes}
+      {...listeners}
+    >
+      {children}
+    </div>
+  );
+}
+
+function SortableDayActivity({
+  activity,
+  isCompleted,
+  onToggle,
+}: {
+  activity: Activity;
+  isCompleted: boolean;
+  onToggle: () => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: activity.id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`day-activity-wrapper ${isDragging ? "dragging" : ""}`}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.55 : 1,
+        position: "relative",
+        zIndex: isDragging ? 1 : undefined,
+      }}
+    >
+      <button
+        type="button"
+        className="routine-drag-handle"
+        {...attributes}
+        {...listeners}
+        aria-label={`Håll och dra för att flytta ${activity.title}`}
+        title="Håll och dra för att ändra ordning"
+      >
+        ⠿
+      </button>
+
+      <button
+        type="button"
+        className={`day-activity ${isCompleted ? "completed" : ""}`}
+        onClick={onToggle}
+        aria-pressed={isCompleted}
+      >
+        <span className="activity-emoji">{activity.emoji}</span>
+
+        <span className="activity-copy">
+          <span className="activity-title">{activity.title}</span>
+          <span className="activity-description">
+            {activity.description}
+          </span>
+        </span>
+
+        <span className="activity-check">
+          {isCompleted ? "✓" : ""}
+        </span>
+      </button>
+    </div>
+  );
+}
+
 export default function MyDay({
   onBack,
   editable = false,
@@ -168,6 +286,14 @@ export default function MyDay({
   const [description, setDescription] = useState("");
   const [emoji, setEmoji] = useState("⭐");
   const [period, setPeriod] = useState<Period>("morning");
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+  );
 
   useEffect(() => {
     try {
@@ -250,13 +376,67 @@ export default function MyDay({
     const confirmed = window.confirm("Vill du ta bort den här rutinen?");
     if (!confirmed) return;
 
-    setRoutines((previous) => previous.filter((item) => item.id !== id));
+    setRoutines((previous) =>
+      previous.filter((item) => item.id !== id),
+    );
+
     setProgress((previous) => ({
       ...previous,
       completed: previous.completed.filter((item) => item !== id),
     }));
 
     if (editingId === id) resetForm();
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    setRoutines((previous) => {
+      const from = previous.findIndex(
+        (item) => item.id === active.id,
+      );
+      const to = previous.findIndex(
+        (item) => item.id === over.id,
+      );
+
+      if (from === -1 || to === -1) return previous;
+
+      const sourcePeriod = previous[from].period;
+
+      // Rutiner kan bara flyttas inom samma tidsperiod.
+      if (sourcePeriod !== previous[to].period) {
+        return previous;
+      }
+
+      const samePeriod = previous.filter(
+        (item) => item.period === sourcePeriod,
+      );
+
+      const oldIndex = samePeriod.findIndex(
+        (item) => item.id === active.id,
+      );
+      const newIndex = samePeriod.findIndex(
+        (item) => item.id === over.id,
+      );
+
+      if (oldIndex === -1 || newIndex === -1) return previous;
+
+      const reordered = arrayMove(
+        samePeriod,
+        oldIndex,
+        newIndex,
+      );
+
+      let index = 0;
+
+      return previous.map((item) =>
+        item.period === sourcePeriod
+          ? reordered[index++]
+          : item,
+      );
+    });
   }
 
   const completedCount = routines.filter((activity) =>
@@ -271,7 +451,11 @@ export default function MyDay({
   return (
     <main className="my-day">
       <header className="my-day-header">
-        <button type="button" className="my-day-back" onClick={onBack}>
+        <button
+          type="button"
+          className="my-day-back"
+          onClick={onBack}
+        >
           ← Tillbaka
         </button>
 
@@ -340,7 +524,9 @@ export default function MyDay({
               När ska rutinen göras?
               <select
                 value={period}
-                onChange={(event) => setPeriod(event.target.value as Period)}
+                onChange={(event) =>
+                  setPeriod(event.target.value as Period)
+                }
               >
                 <option value="morning">🌞 Morgon</option>
                 <option value="day">🌈 Under dagen</option>
@@ -349,7 +535,10 @@ export default function MyDay({
             </label>
 
             <div className="routine-form-actions">
-              <button type="submit" className="routine-save-button">
+              <button
+                type="submit"
+                className="routine-save-button"
+              >
                 {editingId ? "Spara ändringar" : "＋ Lägg till rutin"}
               </button>
 
@@ -371,40 +560,66 @@ export default function MyDay({
             <p>Du har inga rutiner ännu. Lägg till en ovan! 💗</p>
           )}
 
-          <div className="routine-management-list">
-            {routines.map((activity) => (
-              <div className="routine-management-item" key={activity.id}>
-                <span className="routine-management-emoji">
-                  {activity.emoji}
-                </span>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={routines.map((activity) => activity.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="routine-management-list">
+                {routines.map((activity) => (
+                  <SortableRoutineItem
+                    key={activity.id}
+                    activity={activity}
+                  >
+                    <span className="routine-management-emoji">
+                      {activity.emoji}
+                    </span>
 
-                <div className="routine-management-copy">
-                  <strong>{activity.title}</strong>
-                  <span>
-                    {periods.find((item) => item.id === activity.period)?.title}
-                  </span>
-                </div>
+                    <div className="routine-management-copy">
+                      <strong>{activity.title}</strong>
+                      <span>
+                        {
+                          periods.find(
+                            (item) => item.id === activity.period,
+                          )?.title
+                        }
+                      </span>
+                    </div>
 
-                <button
-                  type="button"
-                  className="routine-edit-button"
-                  onClick={() => editRoutine(activity)}
-                  aria-label={`Redigera ${activity.title}`}
-                >
-                  ✏️
-                </button>
+                    <button
+                      type="button"
+                      className="routine-edit-button"
+                      onPointerDown={(event) => event.stopPropagation()}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        editRoutine(activity);
+                      }}
+                      aria-label={`Redigera ${activity.title}`}
+                    >
+                      ✏️
+                    </button>
 
-                <button
-                  type="button"
-                  className="routine-delete-button"
-                  onClick={() => deleteRoutine(activity.id)}
-                  aria-label={`Ta bort ${activity.title}`}
-                >
-                  🗑️
-                </button>
+                    <button
+                      type="button"
+                      className="routine-delete-button"
+                      onPointerDown={(event) => event.stopPropagation()}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        deleteRoutine(activity.id);
+                      }}
+                      aria-label={`Ta bort ${activity.title}`}
+                    >
+                      🗑️
+                    </button>
+                  </SortableRoutineItem>
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
         </section>
       ) : (
         <>
@@ -434,7 +649,9 @@ export default function MyDay({
             </div>
 
             {routines.length > 0 && completedCount === routines.length ? (
-              <p className="all-done">🎉 Hurra! Du har klarat allt idag!</p>
+              <p className="all-done">
+                🎉 Hurra! Du har klarat allt idag!
+              </p>
             ) : (
               <p className="progress-hint">
                 Varje liten sak är ett stort steg! 🌷
@@ -442,73 +659,75 @@ export default function MyDay({
             )}
           </section>
 
-          <div className="my-day-periods">
-            {periods.map((item) => {
-              const periodActivities = routines.filter(
-                (activity) => activity.period === item.id,
-              );
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <div className="my-day-periods">
+              {periods.map((item) => {
+                const periodActivities = routines.filter(
+                  (activity) => activity.period === item.id,
+                );
 
-              const periodCompleted = periodActivities.filter((activity) =>
-                progress.completed.includes(activity.id),
-              ).length;
+                const periodCompleted = periodActivities.filter(
+                  (activity) =>
+                    progress.completed.includes(activity.id),
+                ).length;
 
-              return (
-                <section className={`day-period ${item.id}`} key={item.id}>
-                  <header className="period-header">
-                    <span className="period-emoji">{item.emoji}</span>
-                    <div>
-                      <h2>{item.title}</h2>
-                      <p>{item.description}</p>
-                    </div>
-                    <span className="period-count">
-                      {periodCompleted}/{periodActivities.length}
-                    </span>
-                  </header>
+                return (
+                  <section
+                    className={`day-period ${item.id}`}
+                    key={item.id}
+                  >
+                    <header className="period-header">
+                      <span className="period-emoji">
+                        {item.emoji}
+                      </span>
+                      <div>
+                        <h2>{item.title}</h2>
+                        <p>{item.description}</p>
+                      </div>
+                      <span className="period-count">
+                        {periodCompleted}/{periodActivities.length}
+                      </span>
+                    </header>
 
-                  <div className="day-activities">
-                    {periodActivities.map((activity) => {
-                      const isCompleted = progress.completed.includes(
-                        activity.id,
-                      );
+                    <SortableContext
+                      items={periodActivities.map(
+                        (activity) => activity.id,
+                      )}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="day-activities">
+                        {periodActivities.map((activity) => {
+                          const isCompleted =
+                            progress.completed.includes(activity.id);
 
-                      return (
-                        <button
-                          type="button"
-                          key={activity.id}
-                          className={`day-activity ${
-                            isCompleted ? "completed" : ""
-                          }`}
-                          onClick={() => toggleActivity(activity.id)}
-                          aria-pressed={isCompleted}
-                        >
-                          <span className="activity-emoji">
-                            {activity.emoji}
-                          </span>
+                          return (
+                            <SortableDayActivity
+                              key={activity.id}
+                              activity={activity}
+                              isCompleted={isCompleted}
+                              onToggle={() =>
+                                toggleActivity(activity.id)
+                              }
+                            />
+                          );
+                        })}
 
-                          <span className="activity-copy">
-                            <span className="activity-title">
-                              {activity.title}
-                            </span>
-                            <span className="activity-description">
-                              {activity.description}
-                            </span>
-                          </span>
-
-                          <span className="activity-check">
-                            {isCompleted ? "✓" : ""}
-                          </span>
-                        </button>
-                      );
-                    })}
-
-                    {periodActivities.length === 0 && (
-                      <p className="empty-routines">Inga rutiner här ännu 🌷</p>
-                    )}
-                  </div>
-                </section>
-              );
-            })}
-          </div>
+                        {periodActivities.length === 0 && (
+                          <p className="empty-routines">
+                            Inga rutiner här ännu 🌷
+                          </p>
+                        )}
+                      </div>
+                    </SortableContext>
+                  </section>
+                );
+              })}
+            </div>
+          </DndContext>
 
           <footer className="my-day-footer">
             <span>💖</span>

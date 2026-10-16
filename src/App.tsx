@@ -11,6 +11,7 @@ import Stickers from "./screens/Stickers";
 import MyDay from "./screens/MyDay";
 import ParentView from "./screens/ParentView";
 import MusicStudio from "./screens/MusicStudio";
+import Write from './screens/Write';
 
 import AnalogClock from "./clock";
 
@@ -71,6 +72,12 @@ const apps: AppItem[] = [
     icon: "⭐",
     color: "pink",
   },
+  {
+    name: "Skrivbok",
+    description: "Skriv enga sagor och roliga ord!",
+    icon: "📖",
+    color: "green"
+  }
 ];
 
 export default function App() {
@@ -86,6 +93,7 @@ export default function App() {
     | "myday"
     | "myday-settings"
     | "music"
+    | "write"
   >("home");
 
   const [settings, update] = useSettings();
@@ -142,6 +150,10 @@ export default function App() {
       setScreen("music");
       return;
     }
+    if (name === "Skrivbok"){
+      setScreen("write");;
+      return;
+    }
     alert(`${name} kommer snart! 💗`);
   }
   if (screen === "drawing") {
@@ -191,6 +203,9 @@ export default function App() {
   }
   if (screen === "music") {
     return <MusicStudio onBack={() => setScreen("home")} />;
+  }
+  if (screen === "write"){
+    return <Write onBack={() => setScreen("home")} />
   }
 
   return (

@@ -42,8 +42,11 @@ const LETTERS: { letter: string; word: string }[] = [
   { letter: "Ö", word: "öga" },
 ];
 
-// Multiplikator på flygtiden: högre = långsammare
-const SPEED = { lugn: 1.4, normal: 1, snabb: 0.7 };
+const SPEED = {
+  lugn: 0.8,
+  normal: 0.5,
+  snabb: 0.3,
+};
 
 function speak(text: string) {
   try {
@@ -146,7 +149,7 @@ export default function Bubbles({
     // några direkt, så skärmen inte är tom
     spawn();
     const first = setTimeout(spawn, 400);
-    const timer = setInterval(spawn, 1100);
+    const timer = setInterval(spawn, 900);
     return () => {
       clearTimeout(first);
       clearInterval(timer);
