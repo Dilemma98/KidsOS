@@ -1,5 +1,8 @@
-import { useState, useRef } from "react";
 import "./App.css";
+import { useState, useRef } from "react";
+import { useWeather } from "./useWeather";
+import { useSettings } from "./useSettings";
+
 import DrawingApp from "./screens/DrawingApp";
 import Memory from "./screens/Memory";
 import Bubbles from "./screens/Bubbles";
@@ -9,8 +12,7 @@ import MyDay from "./screens/MyDay";
 import ParentView from "./screens/ParentView";
 import MusicStudio from "./screens/MusicStudio";
 
-import { useWeather } from "./useWeather";
-import { useSettings } from "./useSettings";
+import AnalogClock from "./clock";
 
 type AppItem = {
   name: string;
@@ -58,11 +60,11 @@ const apps: AppItem[] = [
     color: "yellow",
   },
   {
-  name: "Musikstudio",
-  description: "Spela och skapa egen musik!",
-  icon: "🎹",
-  color: "pink",
-},
+    name: "Musikstudio",
+    description: "Spela och skapa egen musik!",
+    icon: "🎹",
+    color: "pink",
+  },
   {
     name: "Favoriter",
     description: "Dina bästa appar samlade här!",
@@ -74,17 +76,17 @@ const apps: AppItem[] = [
 export default function App() {
   const [parentMode, setParentMode] = useState(false);
 
-const [screen, setScreen] = useState<
-  | "home"
-  | "drawing"
-  | "memory"
-  | "bubbles"
-  | "animals"
-  | "stickers"
-  | "myday"
-  | "myday-settings"
-  | "music"
->("home");
+  const [screen, setScreen] = useState<
+    | "home"
+    | "drawing"
+    | "memory"
+    | "bubbles"
+    | "animals"
+    | "stickers"
+    | "myday"
+    | "myday-settings"
+    | "music"
+  >("home");
 
   const [settings, update] = useSettings();
   const weather = useWeather(settings.useLocation);
@@ -137,9 +139,9 @@ const [screen, setScreen] = useState<
       return;
     }
     if (name === "Musikstudio") {
-  setScreen("music");
-  return;
-}
+      setScreen("music");
+      return;
+    }
     alert(`${name} kommer snart! 💗`);
   }
   if (screen === "drawing") {
@@ -171,35 +173,25 @@ const [screen, setScreen] = useState<
     return <Stickers onBack={() => setScreen("home")} />;
   }
 
-
   if (screen === "myday") {
+    return <MyDay onBack={() => setScreen("home")} editable={false} />;
+  }
+
+  if (screen === "myday-settings") {
     return (
       <MyDay
-        onBack={() => setScreen("home")}
-        editable={false}
+        editable={true}
+        startEditing={true}
+        onBack={() => {
+          setScreen("home");
+          setParentMode(true);
+        }}
       />
     );
   }
-
-if (screen === "myday-settings") {
-  return (
-    <MyDay
-      editable={true}
-      startEditing={true}
-      onBack={() => {
-        setScreen("home");
-        setParentMode(true);
-      }}
-    />
-  );
-}
-if (screen === "music") {
-  return (
-    <MusicStudio
-      onBack={() => setScreen("home")}
-    />
-  );
-}
+  if (screen === "music") {
+    return <MusicStudio onBack={() => setScreen("home")} />;
+  }
 
   return (
     <main className="kids-os">
@@ -244,26 +236,21 @@ if (screen === "music") {
         </div>
       </header>
 
-
-{parentMode ? (
-  <ParentView
-    settings={settings}
-    update={update}
-    apps={apps}
-    onClose={() => setParentMode(false)}
-    onEditRoutines={() => {
-      setParentMode(false);
-      setScreen("myday-settings");
-    }}
-  />
-) : (
-
+      {parentMode ? (
+        <ParentView
+          settings={settings}
+          update={update}
+          apps={apps}
+          onClose={() => setParentMode(false)}
+          onEditRoutines={() => {
+            setParentMode(false);
+            setScreen("myday-settings");
+          }}
+        />
+      ) : (
         <>
           <section className="welcome">
-            <div className="welcome-bunny">
-              <p>🐇</p>
-              <span className="bunny-heart">♥</span>
-            </div>
+            <AnalogClock />
 
             <div className="welcome-copy">
               <span className="eyebrow">♥ VÄLKOMMEN ♥</span>
@@ -275,6 +262,7 @@ if (screen === "music") {
                 <br />
                 Välj en app och börja utforska. <span>♥</span>
               </p>
+              
             </div>
 
             <div className="welcome-sun" aria-hidden="true">

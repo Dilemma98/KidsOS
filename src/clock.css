@@ -1,0 +1,83 @@
+
+.analog-clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.analog-clock {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fffdf8, #ffe8ef);
+  border: 4px solid #f2bfd0;
+  box-shadow:
+    0 4px 12px rgba(98, 67, 111, 0.12),
+    inset 0 0 0 3px #fff;
+}
+
+.clock-number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #62436f;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.clock-hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 999px;
+}
+
+.clock-hour {
+  width: 5px;
+  height: 27px;
+  background: #8d5b9b;
+}
+
+.clock-minute {
+  width: 3px;
+  height: 38px;
+  background: #e08a9a;
+}
+
+.clock-second {
+  width: 2px;
+  height: 42px;
+  background: #e6a54b;
+}
+
+.clock-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #62436f;
+  border: 2px solid #fff;
+  z-index: 2;
+}
+
+.clock-day {
+  color: #896c91;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
